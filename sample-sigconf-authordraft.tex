@@ -104,6 +104,9 @@
 \usepackage{tikz}
 \usepackage[slovene]{babel}
 \usetikzlibrary{graphs, graphs.standard, positioning}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definicija}[section]
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -244,16 +247,55 @@
 
 \section{Uvod}
 Teorija grafov predstavlja temelj za razumevanje kompleksnih struktur v modernem računalništvu, od topologij računalniških omrežij do analize socialnih interakcij. Razumevanje grafov in izvajanje algoritmov nad njimi omogoča učinkovito ter avtomatizirano analizo tudi na številnih drugih področjih izven čiste računalniške znanosti, kot so biologija, kemija in logistika.
-\\
+\\\\
 Eden ključnih izzivov pri delu z obsežnimi grafovnimi strukturami je prepoznavanje lastnosti posameznih podgrafov. V tem kontekstu sta izjemno pomembni lastnosti izometričnost in konveksnost. Izometrični podgrafi, ki jih je med prvimi podrobneje raziskoval Djoković \cite{djokovic1973}, ohranjajo razdalje med vozlišči, kar pomeni, da je najkrajša pot med poljubnima vozliščema v podgrafu enako dolga kot v celotnem grafu. Konveksni podgrafi pa predstavljajo še strožji pogoj, saj zahtevajo, da so prav vse najkrajše poti med vozlišči podgrafa v celoti vsebovane znotraj njega.
-\\
+\\\\
 Preverjanje omenjenih lastnosti na prvi pogled deluje preprosto, vendar se pri naivnem pristopu hitro soočimo s problemom računske zahtevnosti. Naivna metoda bi namreč zahtevala izračun najkrajših poti med vsemi pari vozlišč v podgrafu (ang. \textit{All-Pairs Shortest Paths}) in njihovo primerjavo z razdaljami v izvornem grafu. Takšen pristop ima časovno zahtevnost vsaj $O(n^3)$ ali $O(n^2 \log n + nm)$, kar je pri grafih z več tisoč vozlišči praktično neuporabno. Iskanje učinkovitejših algoritmov, ki bi izkoristili specifične strukturne lastnosti grafov, je zato ključno za razvoj odzivnih sistemov.
-\\
-Razumevanje teh struktur je odločilno za optimizacijo usmerjanja v mrežah (ang. \textit{routing}) in za razvoj naprednih algoritmov v računalniški geometriji. V tem eseju se podrobneje osredotočamo na članek \cite{main_paper}, ki analizira algoritme za učinkovito preverjanje teh dveh lastnosti. Naš namen je ne le povzeti predstavljene algoritme, temveč tudi kritično ovrednotiti njihovo uporabnost pri specifičnih topologijah. V nadaljevanju bomo najprej definirali ključne pojme, nato analizirali obstoječe rešitve, v poglavju \ref{sec:premislek} pa predstavili lastne predloge za nadgradnjo in eksperimentalno ovrednotenje teh pristopov.
+\\\\
+Razumevanje teh struktur je odločilno za optimizacijo usmerjanja v mrežah (ang. \textit{routing}) in za razvoj naprednih algoritmov v računalniški geometriji. V tem eseju se podrobneje osredotočamo na članek \cite{main_paper}, ki analizira algoritme za učinkovito preverjanje teh dveh lastnosti. Naš namen je ne le povzeti predstavljene algoritme, temveč tudi kritično ovrednotiti njihovo uporabnost pri specifičnih topologijah. V nadaljevanju bomo najprej definirali ključne pojme, nato analizirali obstoječe rešitve, nato pa predstavili lastne predloge za nadgradnjo in eksperimentalno ovrednotenje teh pristopov.
 \section{Osnove in definicije}
-\subsection{Izometrični podgrafi}
 
-\subsection{Konveksni podgrafi}
+V tem poglavju formalno utemeljimo ključne matematične pojme, ki tvorijo ogrodje za razumevanje problemov izometričnosti in konveksnosti. Terminologija in zapisi so usklajeni s standardnimi deli na področju strukturne teorije grafov \cite{imrich2000}.
+
+\subsection{Osnovne strukture in razdalje}
+
+\begin{definition}[\cite{imrich2000}]
+Naj bo $G = (V, E)$ neusmerjen enostaven graf, kjer $V$ predstavlja končno množico vozlišč, $E$ pa množico povezav. Podgraf $H = (V_H, E_H)$ definiramo kot graf, za katerega veljata inkluziji:
+\[ V_H \subseteq V \quad \text{in} \quad E_H \subseteq E \]
+pri čemer so vse povezave v $E_H$ incidentne izključno vozliščem iz množice $V_H$.
+\end{definition}
+
+\begin{definition}[\cite{winkler1984}]
+Naj bosta $u, v \in V$. Razdalja med vozliščema, označena kot $d_G(u, v)$, je definirana kot:
+\[ d_G(u, v) = \min \{ |P| : P \text{ je pot med } u \text{ in } v \text{ v grafu } G \} \]
+Dolžina poti $|P|$ predstavlja število povezav na tej poti. V primeru, da vozlišči ležita v različnih povezanih komponentah, razdaljo formalno zapišemo kot $d_G(u, v) = \infty$.
+\end{definition}
+
+\subsection{Izometričnost in konveksnost}
+
+Osrednji predmet analize so podgrafi, ki ohranjajo določene metrične lastnosti izvornega grafa. 
+
+\begin{definition}[Izometričen podgraf \cite{djokovic1973}]
+Podgraf $H \subseteq G$ klasificiramo kot \textbf{izometričen}, če se metrične lastnosti med vozlišči v $H$ ne spremenijo glede na širši kontekst grafa $G$. Formalno mora za vsak par vozlišč $u, v \in V_H$ veljati enakost:
+\begin{equation}
+    d_H(u, v) = d_G(u, v)
+\end{equation}
+Intuicija za to definicijo je, da najkrajša pot med vozliščema $u$ in $v$ v podgrafu $H$ ne sme biti daljša od najkrajše poti v celotnem grafu $G$.
+\end{definition}
+
+\begin{definition}[Konveksen podgraf \cite{imrich2000}]
+Lastnost konveksnosti je strožja različica izometričnosti. Podgraf $H \subseteq G$ je \textbf{konveksen}, če vsebuje vse najkrajše poti, ki v grafu $G$ povezujejo poljubni dve vozlišči iz $V_H$. To lastnost elegantno opišemo s pomočjo pojma \textit{intervala} med vozliščema $u$ in $v$, ki ga označimo z $I_G(u, v)$:
+\begin{equation}
+    I_G(u, v) = \{ z \in V : d_G(u, z) + d_G(z, v) = d_G(u, v) \}
+\end{equation}
+Pogoj za konveksnost podgrafa $H$ se nato glasi:
+\begin{equation}
+    \forall u, v \in V_H \implies I_G(u, v) \subseteq V_H
+\end{equation}
+\end{definition}
+
+\subsection{Relacija med lastnostmi}
+Iz zgornjih formalizmov sledi pomembna hierarhična odvisnost. Če je podgraf $H$ konveksen, nujno vsebuje vsaj eno najkrajšo pot (dejansko vse), kar pomeni, da ohranja razdaljo in je zato izometričen. Obratna implikacija ne velja vedno.
 
 \section{Pregled področja}
 \subsection{Zgodovinski razvoj in sorodni problemi}
