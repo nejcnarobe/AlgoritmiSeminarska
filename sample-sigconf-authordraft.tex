@@ -45,7 +45,9 @@
 %%
 %%
 
-\documentclass[sigconf,authordraft]{acmart}
+\documentclass[sigconf
+%,authordraft
+]{acmart}
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -297,9 +299,72 @@ Pogoj za konveksnost podgrafa $H$ se nato glasi:
 \subsection{Relacija med lastnostmi}
 Iz zgornjih formalizmov sledi pomembna hierarhična odvisnost. Če je podgraf $H$ konveksen, nujno vsebuje vsaj eno najkrajšo pot (dejansko vse), kar pomeni, da ohranja razdaljo in je zato izometričen. Obratna implikacija ne velja vedno.
 
+\subsection{Osnovni pojmi}
+\label{basic_concepts}
+Meja $\partial H$ je množica tistih vozlišč v $H$, ki so incidentna vsaj eni povezavi zunaj $H$:
+\begin{equation}
+    \partial H = \{v \in V(H) \mid \exists uv \in E(G)\setminus E(H)\}.
+\end{equation}
+
+Za podgraf $H \subseteq G$ definiramo $H_{\mathrm{out}}$, ki je komplement podgrafa $H$ v $G$, ki vsebuje vse povezavae grafa $G$, ki niso v $H$:
+\begin{equation}
+    H_{\mathrm{out}} = (V(G), E(G)\setminus E(H)).
+\end{equation}
+Razdalje v tem grafu označimo z $d_{H_{\mathrm{out}}}$.
+
+Naslednji pomemben pojem je Wienerjev indeks z označenimi vozlišči, ki je za graf G, kjer $U \subseteq V(G)$, definiran kot:
+\begin{equation}
+    \sum_{x,y \in Z} d_G(x,y)
+\end{equation}
+V klasičnem primeru Wienerjev indeks predstavlja vsoto razdalj med vsemi pari vozlišč grafa, tukaj pa se vsota lahko omeji samo na izbrano množico vozlišč.
+
+
 \section{Pregled področja}
 \subsection{Zgodovinski razvoj in sorodni problemi}
 \subsection{Pregled obstoječih algoritmov}
+
+\section{Karakterizacija izometričnih podgrafov}
+
+V tem poglavju obravnavamo kriterije, s katerimi lahko preverimo, ali je dani podgraf $H \subseteq G$ izometričen. Kot že omenjeno, je podgraf izometričen, če za vsaki dve vozlišči $u,v \in V(H)$ velja
+\begin{equation}
+    d_H(u, v) = d_G(u, v).
+\end{equation}
+To pomeni, da celotni graf $G$ ne vsebuje nobene krajše poti med vozlišči podgrafa $H$, kot jo že vsebuje sam podgraf $H$. Če bi obstajala krajša pot, ki zapusti $H$ in poteka skozi preostanek grafa, potem $H$ ne bi bil izometričen.
+
+
+
+Prvi pomemben kriterij preverja izometričnost na meji podgrafa. Podgraf $H$ je izometričen v povezanem grafu $G$ natanko tedaj, ko za vsaki dve mejni vozlišči $x,y \in \partial H$ velja
+\begin{equation}
+    d_H(x,y) \leq d_{H_{\mathrm{out}}}(x,y).
+\end{equation}
+Ta pogoj pravi, da nobena pot skozi zunanji del grafa ne sme biti krajša od poti znotraj podgrafa $H$. Če bi obstajali mejni vozlišči $x$ in $y$, za kateri bi bila zunanja pot krajša, bi lahko s tem dobili krajšo pot med vozlišči podgrafa, zato $H$ ne bi bil izometričen.
+
+Drug kriterij temelji na vsoti razdalj med pari vozlišč. Osnovna ideja je uporaba Wienerjevega indeksa z označenimi vozlišči (definiranega v podpoglavju~\ref{basic_concepts}). Velja naslednji pogoj:
+\begin{equation}
+    \sum_{x,y \in V(H)} d_G(x,y)
+    =
+    \sum_{x,y \in V(H)} d_H(x,y).
+\end{equation}
+Ker je $H$ podgraf grafa $G$, za vsak par vozlišč $x,y \in V(H)$ vedno velja
+\begin{equation}
+    d_G(x,y) \leq d_H(x,y).
+\end{equation}
+
+Naslednji kriterij predstavi da, ni potrebno seštevati razdalj med vsemi vozlišči iz $V(H)$. Dovolj je izbrati množico $U$, ki vsebuje vsa mejna vozlišča:
+\begin{equation}
+    \partial H \subseteq U \subseteq V(H).
+\end{equation}
+Tedaj je $H$ izometričen v $G$ natanko tedaj, ko velja
+\begin{equation}
+    \sum_{x,y \in U} d_H(x,y)
+    =
+    \sum_{x,y \in U} d_G(x,y).
+\end{equation}
+
+\section{Karakterizacija konveksnih podgrafov}
+Kot že omenjeno je podgraf $H \subseteq G$ \textbf{konveksen}, kadar
+
+
 \section{Premislek in teoretična nadgradnja}
 
 \section{Eksperimentalno ovrednotenje}
