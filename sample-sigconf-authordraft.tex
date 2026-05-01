@@ -306,7 +306,7 @@ Meja $\partial H$ je množica tistih vozlišč v $H$, ki so incidentna vsaj eni 
     \partial H = \{v \in V(H) \mid \exists uv \in E(G)\setminus E(H)\}.
 \end{equation}
 
-Za podgraf $H \subseteq G$ definiramo $H_{\mathrm{out}}$, ki je komplement podgrafa $H$ v $G$, ki vsebuje vse povezavae grafa $G$, ki niso v $H$:
+Za podgraf $H \subseteq G$ definiramo $H_{\mathrm{out}}$, ki je komplement podgrafa $H$ v $G$, ki vsebuje vse povezave grafa $G$, ki niso v $H$:
 \begin{equation}
     H_{\mathrm{out}} = (V(G), E(G)\setminus E(H)).
 \end{equation}
@@ -314,7 +314,7 @@ Razdalje v tem grafu označimo z $d_{H_{\mathrm{out}}}$.
 
 Naslednji pomemben pojem je Wienerjev indeks z označenimi vozlišči, ki je za graf G, kjer $U \subseteq V(G)$, definiran kot:
 \begin{equation}
-    \sum_{x,y \in Z} d_G(x,y)
+    \sum_{x,y \in U} d_G(x,y)
 \end{equation}
 V klasičnem primeru Wienerjev indeks predstavlja vsoto razdalj med vsemi pari vozlišč grafa, tukaj pa se vsota lahko omeji samo na izbrano množico vozlišč.
 
@@ -350,7 +350,7 @@ Ker je $H$ podgraf grafa $G$, za vsak par vozlišč $x,y \in V(H)$ vedno velja
     d_G(x,y) \leq d_H(x,y).
 \end{equation}
 
-Naslednji kriterij predstavi da, ni potrebno seštevati razdalj med vsemi vozlišči iz $V(H)$. Dovolj je izbrati množico $U$, ki vsebuje vsa mejna vozlišča:
+Naslednji kriterij pokaže, da ni potrebno seštevati razdalj med vsemi vozlišči iz $V(H)$. Dovolj je izbrati množico $U$, ki vsebuje vsa mejna vozlišča:
 \begin{equation}
     \partial H \subseteq U \subseteq V(H).
 \end{equation}
@@ -362,8 +362,45 @@ Tedaj je $H$ izometričen v $G$ natanko tedaj, ko velja
 \end{equation}
 
 \section{Karakterizacija konveksnih podgrafov}
-Kot že omenjeno je podgraf $H \subseteq G$ \textbf{konveksen}, kadar
 
+Kot že omenjeno je podgraf $H \subseteq G$ \textbf{konveksen}, kadar vsebuje vse najkrajše poti med poljubnima vozliščema iz $H$. To je strožji pogoj od izometričnosti: izometričnost zahteva samo, da se razdalje med vozlišči ohranijo, konveksnost pa zahteva, da nobena najkrajša pot med vozlišči podgrafa ne zapusti podgrafa.
+
+Podobno kot pri izometričnih podgrafih lahko tudi konveksnost preverjamo prek mejnih vozlišč. Za povezan graf $G$ in podgraf $H$ velja, da je $H$ konveksen natanko tedaj, ko za vsaki različni mejni vozlišči $x,y \in \partial H$ velja
+\begin{equation}
+    d_H(x,y) < d_{H_{\mathrm{out}}}(x,y).
+\end{equation}
+Ta pogoj je podoben pogoju za izometričnost, vendar je tu neenakost stroga. Pri izometričnosti je dovolj, da zunanja pot ni krajša od notranje, pri konveksnosti pa zunanja pot ne sme biti niti enako dolga. Če bi obstajala zunanja pot enake dolžine kot notranja najkrajša pot, bi tudi ta zunanja pot predstavljala najkrajšo pot med vozliščema iz $H$, vendar ne bi bila v celoti vsebovana v $H$. To bi kršilo definicijo konveksnosti.
+
+Za nadaljnje kriterije uvedemo rahlo spremembo dolžin povezav. Povezave, ki niso v $H$, se skrajšajo za majhno vrednost $\delta > 0$. Novo dolžino povezave označimo z:
+\begin{equation}
+    \hat{\ell}(e) =
+    \begin{cases}
+        \ell(e), & \text{če } e \in E(H),\\
+        \ell(e) - \delta, & \text{če } e \in E(G)\setminus E(H).
+    \end{cases}
+\end{equation}
+Pri tem mora biti $\delta$ dovolj majhen, da skrajšanje povezav ne ustvari novih najkrajših poti, ki v prvotnem grafu niso bile najkrajše. Razdaljo v grafu $G$ glede na tako spremenjene dolžine označimo z $\hat{d}_G$.
+
+Če obstaja najkrajša pot med vozliščema iz $H$, ki zapusti podgraf $H$, potem bo po skrajšanju zunanjih povezav ta pot postala strogo krajša. Na ta način lahko konveksnost prevedemo v primerjavo vsot razdalj, podobno kot pri izometričnosti. Zato je podgraf $H$ konveksen natanko tedaj, ko velja
+\begin{equation}
+    \sum_{x,y \in V(H)} \hat{d}_G(x,y)
+    =
+    \sum_{x,y \in V(H)} d_H(x,y).
+\end{equation}
+Če je $H$ konveksen, potem vsaka najkrajša pot med vozlišči iz $H$ ostane znotraj $H$, zato skrajšanje zunanjih povezav ne vpliva na razdalje med vozlišči podgrafa. Posledično sta zgornji vsoti enaki. Če pa $H$ ni konveksen, obstaja najkrajša pot, ki zapusti $H$; po skrajšanju zunanjih povezav postane ustrezna razdalja v $G$ manjša, zato enakost vsot ne more več veljati.
+
+Tako kot pri izometričnih podgrafih tudi tukaj ni nujno seštevati razdalj med vsemi vozlišči iz $V(H)$. Dovolj je vzeti množico $U$, ki vsebuje vsa mejna vozlišča:
+\begin{equation}
+    \partial H \subseteq U \subseteq V(H).
+\end{equation}
+Tedaj je $H$ konveksen natanko tedaj, ko velja
+\begin{equation}
+    \sum_{x,y \in U} d_H(x,y)
+    =
+    \sum_{x,y \in U} \hat{d}_G(x,y).
+\end{equation}
+
+Glavna razlika med karakterizacijo izometričnosti in karakterizacijo konveksnosti je torej v strožjem pogoju. Pri izometričnosti preverjamo, ali obstaja krajša pot zunaj $H$, pri konveksnosti pa moramo izključiti tudi enako dolge zunanje najkrajše poti. 
 
 \section{Premislek in teoretična nadgradnja}
 
