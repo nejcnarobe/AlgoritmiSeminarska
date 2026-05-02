@@ -167,16 +167,14 @@
 %% of authors' names for this purpose.
 \renewcommand{\shortauthors}{Dogandžić, et al.}
 
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
+
 \begin{abstract}
-  A clear and well-documented \LaTeX\ document is presented as an
-  article formatted for publication by ACM in a conference proceedings
-  or journal publication. Based on the ``acmart'' document class, this
-  article presents and explains many of the common variations, as well
-  as many of the formatting elements an author may use in the
-  preparation of the documentation of their work.
+V eseju obravnavamo problem preverjanja konveksnosti in izometričnosti podgrafa v danem grafu, ki predstavlja pomemben izziv v teoriji grafov in algoritmih. Delo se osredotoča na analizo članka Sergia Cabella, ki podaja učinkovite karakterizacije teh lastnosti ter predlaga algoritme za njihovo preverjanje.
+
+Najprej predstavimo osnovne pojme, povezane z razdaljami v grafih, ter formalne definicije izometričnih in konveksnih podgrafov. Nato sledi pregled obstoječih pristopov in sorodnih problemov iz literature, s poudarkom na metrični teoriji grafov in grafovski konveksnosti. V nadaljevanju podrobno analiziramo Cabellove karakterizacije, ki omogočajo preverjanje obeh lastnosti na podlagi primerjave razdalj, ter predstavimo njihove algoritmične implikacije.
+
+Posebej obravnavamo časovno zahtevnost problema in predstavimo pogojne spodnje meje, ki kažejo, da v splošnem primeru ne moremo pričakovati bistveno hitrejših algoritmov od kvadratnega časa.
+
 \end{abstract}
 
 %%
@@ -210,7 +208,7 @@
 %%
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
-\keywords{konveksnost, izometričnost, podgrafi, algoritmi}
+\keywords{izometrični podgraf, geodetska konveksnost, Wienerjev indeks, mejna vozlišča, spodnja meja, drevesna širina, ravninski grafi}
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
 %% page.
@@ -609,7 +607,7 @@ Algoritem uporablja podatkovno strukturo za vzdrževanje zaporedja števil
 \end{equation}
 Podpirati mora inicializacijo, prištevanje vrednosti posameznemu elementu, prištevanje vrednosti zveznemu intervalu elementov ter poizvedbo minimuma. To lahko izvedemo z uravnoteženim binarnim drevesom z dodatnimi informacijami v vozliščih. Inicializacija traja $O(k)$, vsaka posodobitev ali poizvedba pa $O(\log k)$.
 
-Ta struktura se uporabi pri vzdrževanju razdalj med vozlišči na meji ploskve. Namesto da bi za vsako vozlišče cikla znova izračunali drevo najkrajših poti, algoritem premika koren drevesa vzdolž cikla. Pri premiku iz enega vozlišča v naslednje se drevo spremeni samo lokalno: nekatere povezave se odstranijo, druge dodajo, razdalje do določenih skupin vozlišč pa se spremenijo za enako vrednost. Te spremembe se zato lahko predstavijo kot operacije nad zaporedjem.
+Ta struktura se uporabi pri vzdrževanju razdalj med vozlišči na meji ploskve. Namesto da bi za vsako vozlišče cikla znova izračunali drevo najkrajših poti, algoritem premika koren drevesa vzdolž cikla. Pri premiku iz enega vozlišča v naslednje se drevo spremeni le lokalno: nekatere povezave se odstranijo, druge dodajo, razdalje do določenih skupin vozlišč pa se spremenijo za enako vrednost. Te spremembe se zato lahko predstavijo kot operacije nad zaporedjem.
 
 Za testiranje izometričnosti in konveksnosti članek vzdržuje razliko med zunanjimi in notranjimi razdaljami. Če vozlišča cikla označimo z $x_1,\ldots,x_k$, potem za fiksno vozlišče $x_i$ obravnavamo vrednosti oblike
 \begin{equation}
@@ -630,7 +628,7 @@ Pri konveksnosti je pogoj strožji. Zunanja pot ne sme biti niti enako dolga kot
 \end{equation}
 Ekvivalentno mora biti minimum zaporedja $\tilde{D}_i$ strogo večji od $0$. Če je minimum manjši ali enak $0$, potem obstaja najkrajša pot, ki zapusti $H$, zato podgraf ni konveksen.
 
-Glavni rezultat šestega poglavja je naslednji.
+Glavni rezultat šestega poglavja je naslednji:
 
 \begin{theorem}[\cite{main_paper}]
 Naj bo $G$ ravninski graf z $n$ vozlišči in naj bo $H=\operatorname{int}(G,C)$ podgraf, definiran s ciklom $C$. Tedaj lahko v času
@@ -648,11 +646,13 @@ Pomen rezultata je v tem, da cikel $C$ jasno loči notranjost in zunanjost podgr
 \end{equation}
 Ker je število mejnih ciklov konstantno, ostane število potrebnih primerjav omejeno, zato se ohrani skoraj linearna časovna zahtevnost.
 
-\section{Premislek in teoretična nadgradnja}
-
-\section{Eksperimentalno ovrednotenje}
 
 \section{Zaključek}
+V tem delu smo obravnavali problem preverjanja konveksnosti in izometričnosti podgrafa v splošnem grafu, pri čemer smo se osredotočili na rezultate Cabellovega članka. Pokazali smo, da je mogoče obe lastnosti učinkovito karakterizirati s primerjavo razdalj, zlasti na množici mejnih vozlišč, kar omogoča bistveno bolj učinkovite algoritme od naivnih pristopov.
+
+Pomemben prispevek analiziranega dela je tudi razumevanje omejitev teh problemov. Pogojne spodnje meje, ki temeljijo na domnevah OVC in SETH, kažejo, da v splošnem primeru ne moremo pričakovati bistveno hitrejših algoritmov od kvadratnega časa. To poudarja pomen raziskovanja posebnih razredov grafov, kjer lahko izkoristimo dodatno strukturo in dosežemo boljše časovne zahtevnosti, kot na primer pri grafih majhne drevesne širine ali planarnih grafih.
+
+Analiza kaže, da je povezava med metrično teorijo grafov in algoritmičnimi tehnikami ključna za razumevanje teh problemov. Nadaljnje raziskave bi se lahko usmerile v razvoj učinkovitejših algoritmov za širše razrede grafov ali v iskanje novih karakterizacij, ki bi omogočile hitrejše preverjanje konveksnosti in izometričnosti v praksi.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
