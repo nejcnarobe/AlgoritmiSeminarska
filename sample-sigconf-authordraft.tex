@@ -312,7 +312,7 @@ Za podgraf $H \subseteq G$ definiramo $H_{\mathrm{out}}$, ki je komplement podgr
 \begin{equation}
     H_{\mathrm{out}} = (V(G), E(G)\setminus E(H)).
 \end{equation}
-Razdalje v tem grafu označimo z $d_{H_{\mathrm{out}}}$.
+$H_{\mathrm{out}}$ lahko vsebuje tudi izolirana vozlišča. Razdalje v $H_{\mathrm{out}}$ označimo z $d_{H_{\mathrm{out}}}$.
 
 Naslednji pomemben pojem je Wienerjev indeks z označenimi vozlišči, ki je za graf G, kjer $U \subseteq V(G)$, definiran kot:
 \begin{equation}
@@ -392,7 +392,7 @@ Tudi tu gre za uporabo geodetske konveksnosti.
 
 \subsection{Pregled obstoječih algoritmov}
 
-\section{Karakterizacija izometričnih podgrafov}
+\section{Karakterizacija izometričnih podgrafov \cite{main_paper}}
 
 V tem poglavju obravnavamo kriterije, s katerimi lahko preverimo, ali je dani podgraf $H \subseteq G$ izometričen. Kot že omenjeno, je podgraf izometričen, če za vsaki dve vozlišči $u,v \in V(H)$ velja
 \begin{equation}
@@ -430,7 +430,7 @@ Tedaj je $H$ izometričen v $G$ natanko tedaj, ko velja
     \sum_{x,y \in U} d_G(x,y).
 \end{equation}
 
-\section{Karakterizacija konveksnih podgrafov}
+\section{Karakterizacija konveksnih podgrafov \cite{main_paper}}
 
 Kot že omenjeno je podgraf $H \subseteq G$ \textbf{konveksen}, kadar vsebuje vse najkrajše poti med poljubnima vozliščema iz $H$. To je strožji pogoj od izometričnosti: izometričnost zahteva samo, da se razdalje med vozlišči ohranijo, konveksnost pa zahteva, da nobena najkrajša pot med vozlišči podgrafa ne zapusti podgrafa.
 
@@ -448,7 +448,8 @@ Za nadaljnje kriterije uvedemo rahlo spremembo dolžin povezav. Povezave, ki nis
         \ell(e) - \delta, & \text{če } e \in E(G)\setminus E(H).
     \end{cases}
 \end{equation}
-Pri tem mora biti $\delta$ dovolj majhen, da skrajšanje povezav ne ustvari novih najkrajših poti, ki v prvotnem grafu niso bile najkrajše. Razdaljo v grafu $G$ glede na tako spremenjene dolžine označimo z $\hat{d}_G$.
+
+Pri tem mora veljati \(0<\delta\le \varepsilon(G,\ell)\), kjer je \(\varepsilon\) izbran tako, da skrajšanje zunanjih povezav ne ustvari novih najkrajših poti glede na prvotne dolžine. Razdaljo v grafu $G$ glede na tako spremenjene dolžine označimo z $\hat{d}_G$.
 
 Če obstaja najkrajša pot med vozliščema iz $H$, ki zapusti podgraf $H$, potem bo po skrajšanju zunanjih povezav ta pot postala strogo krajša. Na ta način lahko konveksnost prevedemo v primerjavo vsot razdalj, podobno kot pri izometričnosti. Zato je podgraf $H$ konveksen natanko tedaj, ko velja
 \begin{equation}
@@ -475,10 +476,10 @@ Glavna razlika med karakterizacijo izometričnosti in karakterizacijo konveksnos
 
 V tem poglavju obravnavamo računsko zahtevnost preverjanja izometričnosti in konveksnosti v splošnih grafih. Glavni rezultat je pogojna spodnja meja, ki pove, da za redke grafe ne moremo pričakovati bistveno hitrejšega algoritma od kvadratne časovne zahtevnosti, razen če se izkaže, da nekatere standardne domneve iz teorije računske zahtevnosti ne veljajo.
 
-Spodnja meja temelji na dveh znanih domnevah: domnevi o ortogonalnih vektorjih (angl. \textit{Orthogonal Vectors Conjecture}), označeni z OVC, in Hipotezi o močnem eksponentnem času (angl. \textit{Strong Exponential Time Hypothesis}), označeni s SETH.
+Spodnja meja temelji na dveh domnevah: domnevi o ortogonalnih vektorjih (angl. \textit{Orthogonal Vectors Conjecture}), označeni z OVC, in Hipotezi o močnem eksponentnem času (angl. \textit{Strong Exponential Time Hypothesis}), označeni s SETH.
 
 
-\begin{assumption}[OVC \cite{WILLIAMS2005357}] Za vsak konstanten $\varepsilon > 0$ obstaja konstanta $c \geq 1$ da naslednji problem ne more biti rešen v času $O(n^{2-\varepsilon})$: \textit{ ali za n binarnih vektorjev $v_1, \ldots, v_n \in \{0,1\}^d$, kjer je $d = \lceil c \log n \rceil$, obstajata $i,j \in [n]$ da je $\langle v_i, v_j \rangle = 0$}.
+\begin{assumption}[OVC \cite{WILLIAMS2005357}] Za vsak konstanten $\varepsilon > 0$ obstaja konstanta $c \geq 1$ da naslednji problem ne more biti rešen v času $O(n^{2-\varepsilon})$: \textit{ ali za n binarnih vektorjev $v_1, \ldots, v_n \in \{0,1\}^d$, kjer je $d = \lceil c \log n \rceil$, obstajata $i,j \in [n]$ za katera velja $\langle v_i, v_j \rangle = 0$}.
 
 \end{assumption}
 \begin{assumption}[SETH] 
@@ -488,19 +489,55 @@ Spodnja meja temelji na dveh znanih domnevah: domnevi o ortogonalnih vektorjih (
 Pomembna povezava med tema domnevama je, da OVC sledi iz SETH.
 
 Spodnja meja je povezana s problemom premera grafa. Premer grafa $G$ je definiran kot največja razdalja med poljubnima vozliščema:
-\[
+\begin{equation}
     \operatorname{diam}(G) = \max_{x,y \in V(G)} d_G(x,y).
-\]
+\end{equation}
 
 \begin{theorem}
 \label{theorem-diam-ovc-seth-fail}
-  Za neusmerjene grafe z $n$ vozlišči in $O(n)$ povezavami bi algoritem, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, ločil med grafi s premerom $2$ in grafi s premerom $3$  pomenilo , da OVC in SETH ne veljata.
+  Za neusmerjen graf $G$ z $n$ vozlišči in $O(n)$ povezavami, kjer imajo vse povezave enotsko dolžino, bi algoritem, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, ločil med grafi s premerom $2$ in grafi s premerom $3$  pomenilo, da OVC in SETH ne veljata.
 \end{theorem}
 
 Izrek~\ref{theorem-diam-ovc-seth-fail} se prenese tudi na problema preverjanja izometričnosti in konveksnosti podgrafa. 
  
- \begin{theorem} Za neusmerjen graf $G$ z $n$ vozlišči in $O(n)$ povezavami ter podgraf $H \subseteq G$ bi obstoj algoritma, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, odločil, ali je $H$ izometričen podgraf grafa $G$, pomenil, da OVC in SETH ne veljata. Enako velja tudi za preverjanje konveksnosti.
+\begin{theorem}
+\label{theorem-diam-ovc-seth-fail2}
+   Za neusmerjen graf $G$ z $n$ vozlišči in $O(n)$ povezavami, kjer imajo vse povezave enotsko dolžino, ter podgraf $H \subseteq G$ bi obstoj algoritma, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, odločil, ali je $H$ izometričen podgraf grafa $G$, pomenil, da OVC in SETH ne veljata. Enako velja tudi za preverjanje konveksnosti.
 \end{theorem}
+
+Formalni dokaz Izreka~\ref{theorem-diam-ovc-seth-fail2} je podan v Izreku 9, v Cabellovem članku~\cite{main_paper}. Ideja dokaza temelji na prevedbi problema premera iz Izreka~\ref{theorem-diam-ovc-seth-fail}. V dokazu se iz grafa \(H\) najprej zgradi graf \(H_3\) tako, da vsako povezavo grafa \(H\) dvakrat subdividiramo, zato vsaka prvotna povezava postane pot dolžine 3. Nato se doda novo vozlišče \(v^*\), ki je z vsakim prvotnim vozliščem grafa \(H\) povezano s potjo dolžine 4. Konstrukcija je prikazana na sliki~\ref{fig:lower-bound}. Nastali graf je označen z \(G\), podgraf,
+ki ga preverjamo, pa je \(H_3\). 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{images/lower-bound.png}
+    \caption{Konstrukcija iz dokaza izreka 9. Povzeto po Cabellu~\cite{main_paper}, slika 2.}
+    \label{fig:lower-bound}
+\end{figure}
+
+
+Ključna lastnost konstrukcije je, da za prvotni vozlišči \(x,y \in V(H)\) velja
+\begin{equation}
+d_{H_3}(x,y)=3d_H(x,y),
+\qquad
+d_G(x,y)=\min\{3d_H(x,y),8\}.
+\end{equation}
+
+Če ima \(H\) premer 2, potem za vsa prvotna vozlišča \(x,y\in V(H)=\partial H_3\) velja
+\begin{equation}
+d_G(x,y)=d_{H_3}(x,y).
+\end{equation}
+Ker so ta vozlišča ravno meja podgrafa \(H_3\), sledi, da je \(H_3\) izometričen podgraf grafa \(G\). Če pa ima \(H\) premer 3, obstajata vozlišči \(x,y\), za kateri
+je razdalja v \(H_3\) enaka 9, medtem ko je v \(G\) na voljo pot dolžine 8 prek vozlišča
+\(v^*\). Zato \(H_3\) ni izometričen. 
+
+Za konveksnost se uporabi ista konstrukcija, vendar z rahlo skrajšanimi povezavami zunaj \(H_3\). Če vzamemo na primer \(\delta<1/10\), potem za \(x,y\in V(H)\) velja
+\[
+\hat d_G(x,y)=\min\{3d_H(x,y),8-8\delta\}.
+\]
+Če ima \(H\) premer 2, je \(3d_H(x,y)\le 6\), zato zunanja pot prek \(v^*\) ne more postati najkrajša, in po Lemi 7 sledi konveksnost. Če ima \(H\) premer 3, pa \(H_3\) že ni izometričen, zato tudi ne more biti konveksen.
+
+
 
 Glavni sklep je, da za splošne redke grafe ne moremo pričakovati algoritma s časovno zahtevnostjo $O(n^{2-\varepsilon})$ za preverjanje izometričnosti ali konveksnosti podgrafa, za katerikoli konstanten $\varepsilon > 0$, razen če bi se izkazalo, da OVC in SETH ne veljata. To pomeni, da so znani splošni algoritmi, ki temeljijo na računanju razdalj med pari vozlišč, v splošnem primeru skoraj optimalni glede na trenutno sprejete domneve računske zahtevnosti.
 
