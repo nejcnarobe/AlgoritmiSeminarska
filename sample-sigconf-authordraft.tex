@@ -152,7 +152,7 @@
 }
 
 \author{Marko Zupančič Muc}
-\email{mzxxxx@student.uni-lj.si}
+\email{mm2576@student.uni-lj.si}
 \affiliation{%
   \institution{Univerza v Ljubljani, Fakulteta za računalništvo in informatiko}
   \city{Ljubljana}
@@ -322,7 +322,74 @@ V klasičnem primeru Wienerjev indeks predstavlja vsoto razdalj med vsemi pari v
 
 
 \section{Pregled področja}
+
+Za ustrezno umestitev obravnavanega članka je treba poudariti, da se Cabellov problem testiranja razlikuje od več dobro preučenih sorodnih problemov.
+Cabello se ukvarja s testiranjem, ali je \(H\) konveksen (ali izometričen) v \(G\).
+Ta formulacija problema povezuje več starejših smeri raziskovanja.
+
+Prva je splošna teorija grafovske konveksnosti, kjer geodetska konveksnost predstavlja le eno izmed več možnih poti za prenos konveksnosti v diskretno okolje \cite{changat2005convexities, pelayo2013geodesic}.
+Druga smer je metrična teorija grafov, zlasti teorija medianskih grafov, parcialnih kubov, vložitev (angl.\emph{embedding}) v hiperkocke in Hammingove grafe ter teorija produktov grafov \cite{bandelt2008metric, ovchinnikov2011, hammack2011handbook}.
+Tretja smer je algoritemska: pred Cabellovim delom so bili dobro raziskani sorodni, vendar ne enaki problemi, na primer prepoznavanje medianskih grafov, prepoznavanje parcialnih kubov, računanje konveksnih lupin in parametra \emph{hull number} ter iskanje konveksnih rezov \cite{dourado2009computation, eppstein2007recognizing, glantz2017finding}.
+Pomembno je, da teh problemov ne enačimo s Cabellovim. Prepoznati, ali je celoten graf medianski ali parcialni kub, ni isto kot preveriti, ali je že podan podgraf \(H\) konveksen ali izometričen v že podanem grafu \(G\).
+
 \subsection{Zgodovinski razvoj in sorodni problemi}
+
+\paragraph{Geodetske konveksnost.}
+Konveksnost v grafih ni enoličen pojem.
+V evklidski geometriji je konveksna množica tist, ki vsebuje daljico med poljubnima dvema točkama.
+V grafih pa obstaja več možnih analogij daljice.
+Lahko gledamo vse najkrajše poti, inducirane poti, monotone poti ali druge
+vrste poti.
+Zato literatura govori o različnih grafovskih konveksnostih, ki so odvisne od izbrane družine poti \cite{changat2005convexities}.
+V delu, ki ga obravnavamo, je relevantna predvsem geodetska konveksnost.
+Torej podgraf je konveksen, če vsebuje vsa vozlišča na vseh najkrajših
+poteh med poljubnima dvema svojima vozliščema.
+
+\paragraph{Izometrične vložitve in produktni prostori.}
+Podobna lastnost konveksnosti je izometričnost podgrafa.
+Izometričnost je šibkejša zahteva, da so razdalje med vozlišči podgrafa enake, ne glede na to, ali jih merimo v \(H\) ali v \(G\).
+Izometričnost je zgodovinsko tesno povezana z vprašanji vložitev grafov v enostavnejše metrične prostore, kot jih srečamo na primer pri delnih kubih.
+
+Graf je delni kub, če je izomorfen izometričnemu podgrafu hiperkocke.
+Ena izmed zgodnjih smeri je teorija vložitev v hiperkocke.
+Firsov \cite{firsov1965isometric} je obravnaval izometrične vložitve grafov v Boolove kocke, Djoković \cite{djokovic1973} pa je razvil temeljne ideje o izometričnih (t.j. kjer se ohranijo razdalje) podgrafih hiperkock.
+Iz te smeri se je razvila teorija parcialnih kubov, tj. grafov, ki so izometrični podgrafi hiperkock.
+Kasneje je Winkler \cite{winkler1984} obravnaval izometrične vložitve v produkte polnih grafov, kar vodi do Hammingovih grafov in produktnih metrik.
+Chepoi \cite{chepoi1988isometric} je nadalje povezal izometrične podgrafe Hammingovih grafov s konveksnostnimi pojmi, Ovchinnikov \cite{ovchinnikov2011} pa podaja pregleden opis parcialnih kubov kot ene izmed osrednjih družin metrične teorije grafov.
+
+Pri parcialnih kubih se sprašujemo, ali se celoten graf lahko izometrično vloži v hiperkocko.
+To pomeni, da se ne ukvarjamo s preverjanjem, ali je podan podgraf izometričen, temveč s preverjanjem, ali je podgraf \(C\) izomorfen izometričnemu podgrafu grafa \(Q_d\), kjer je \(Q_d\) hiperkocka.
+
+\paragraph{Mediani grafi in vloga konveksnosti.}
+Posebno pomembno mesto v literaturi zasedajo mediani grafi.
+Graf je median, če za vsaka tri vozlišča obstaja natanko eno vozlišče, ki leži hkrati na najkrajši poti med vsakima dvema izmed njih. Takšno vozlišče imenujemo mediana trojice.
+Pri mediani grafih je konveksnost del notranje strukture (geometrije) grafa.
+
+Začetki teorije medianih grafov segajo v delo Nebeskega \cite{nebesky1971median}, pomembno strukturno teorijo pa sta razvila Mulder
+\cite{mulder1978} ter Mulder in Schrijver \cite{mulder1979median}.
+Klavžarja in Mulderja sta tudi opravila pregled \cite{klavzar1999median} medianih grafov ter jih povezala z lokacijsko teorijo, konveksnostjo in sorodnimi strukturami.
+Bandelt in Chepoi \cite{chepoi2002} dodatno poudarita povezavo med
+medianimi grafi, gated množicami in kubičnimi strukturami.
+
+Za našo razpravo je bistveno naslednje: v medianih grafih se konveksnost
+obnaša bistveno bolj urejeno kot v splošnih grafih.
+Konveksne množice so tesno povezane z gated množicami, kar omogoča preproste lokalne karakterizacije in učinkovite algoritme.
+
+\paragraph{Sorodni algoritemski problemi.}
+Eden izmed sorodnih problemov je računanje konveksne lupine in parametra \emph{hull number}.
+Dourado et.al \cite{dourado2009computation} se osredotočajo na izračun najmanjših množic, katerih konveksna lupina je celoten graf.
+Njihov cilj ni neposredno preverjanje konveksnosti podanega podgrafa, vendar Cabello iz te literature izpelje algoritem za testiranje konveksnosti v primeru enotskih dolžin povezav ter ga posploši na povezave z neenotskimi dolžinami.
+
+Druga bližnja smer so algoritmi za posebne razrede grafov.
+Imrich in Klavžar \cite{imrich1998convexity} sta uporabila konveksnostne lastnosti in \(\Theta\)-razrede v bipartitnih grafih za
+prepoznavanje medianih grafov v $O(nm)$ času.
+Imrich, Klavžar in Mulder \cite{imrichWilfriedKlavzar1999} so iskanje medianih grafov povezala s trikotniško prostimi grafi.
+Na izometrični strani je posebej pomemben Eppsteinov algoritem za prepoznavanje parcialnih kubov v kvadratičnem času \cite{eppstein2007recognizing}.
+
+Tretja bližnja smer so problemi konveksnih rezov in razcepov grafov.
+Glantz in Meyerhenke \cite{glantz2017finding} obravnavata iskanje konveksnih rezov v splošnih, bipartitnih in ravninskih grafih.
+Tudi tu gre za uporabo geodetske konveksnosti.
+
 \subsection{Pregled obstoječih algoritmov}
 
 \section{Karakterizacija izometričnih podgrafov}
