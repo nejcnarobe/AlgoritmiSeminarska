@@ -167,16 +167,14 @@
 %% of authors' names for this purpose.
 \renewcommand{\shortauthors}{Dogandžić, et al.}
 
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
+
 \begin{abstract}
-  A clear and well-documented \LaTeX\ document is presented as an
-  article formatted for publication by ACM in a conference proceedings
-  or journal publication. Based on the ``acmart'' document class, this
-  article presents and explains many of the common variations, as well
-  as many of the formatting elements an author may use in the
-  preparation of the documentation of their work.
+V eseju obravnavamo problem preverjanja konveksnosti in izometričnosti podgrafa v danem grafu, ki predstavlja pomemben izziv v teoriji grafov in algoritmih. Delo se osredotoča na analizo članka Sergia Cabella, ki podaja učinkovite karakterizacije teh lastnosti ter predlaga algoritme za njihovo preverjanje.
+
+Najprej predstavimo osnovne pojme, povezane z razdaljami v grafih, ter formalne definicije izometričnih in konveksnih podgrafov. Nato sledi pregled obstoječih pristopov in sorodnih problemov iz literature, s poudarkom na metrični teoriji grafov in grafovski konveksnosti. V nadaljevanju podrobno analiziramo Cabellove karakterizacije, ki omogočajo preverjanje obeh lastnosti na podlagi primerjave razdalj, ter predstavimo njihove algoritmične implikacije.
+
+Posebej obravnavamo časovno zahtevnost problema in predstavimo pogojne spodnje meje, ki kažejo, da v splošnem primeru ne moremo pričakovati bistveno hitrejših algoritmov od kvadratnega časa.
+
 \end{abstract}
 
 %%
@@ -210,7 +208,7 @@
 %%
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
-\keywords{konveksnost, izometričnost, podgrafi, algoritmi}
+\keywords{izometrični podgraf, geodetska konveksnost, Wienerjev indeks, mejna vozlišča, spodnja meja, drevesna širina, ravninski grafi}
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
 %% page.
@@ -329,12 +327,12 @@ Ta formulacija problema povezuje več starejših smeri raziskovanja.
 
 Prva je splošna teorija grafovske konveksnosti, kjer geodetska konveksnost predstavlja le eno izmed več možnih poti za prenos konveksnosti v diskretno okolje \cite{changat2005convexities, pelayo2013geodesic}.
 Druga smer je metrična teorija grafov, zlasti teorija medianskih grafov, parcialnih kubov, vložitev (angl.\emph{embedding}) v hiperkocke in Hammingove grafe ter teorija produktov grafov \cite{bandelt2008metric, ovchinnikov2011, hammack2011handbook}.
-Tretja smer je algoritemska: pred Cabellovim delom so bili dobro raziskani sorodni, vendar ne enaki problemi, na primer prepoznavanje medianskih grafov, prepoznavanje parcialnih kubov, računanje konveksnih lupin in parametra \emph{hull number} ter iskanje konveksnih rezov \cite{dourado2009computation, eppstein2007recognizing, glantz2017finding}.
-Pomembno je, da teh problemov ne enačimo s Cabellovim. Prepoznati, ali je celoten graf medianski ali parcialni kub, ni isto kot preveriti, ali je že podan podgraf \(H\) konveksen ali izometričen v že podanem grafu \(G\).
+Tretja smer je algoritemska, pred Cabellovim delom so bili dobro raziskani sorodni, vendar ne enaki problemi, na primer prepoznavanje medianskih grafov, prepoznavanje parcialnih kubov, računanje konveksnih lupin in parametra \emph{hull number} ter iskanje konveksnih rezov \cite{dourado2009computation, eppstein2007recognizing, glantz2017finding}.
+Pomembno je, da teh problemov ne enačimo s Cabellovim. Prepoznati, ali je celoten graf medianski ali parcialni kub, ni isto kot preveriti, ali je že podan podgraf \(H\) konveksen ali izometričen v podanem grafu \(G\).
 
 \subsection{Zgodovinski razvoj in sorodni problemi}
 
-\paragraph{Geodetske konveksnost.}
+\paragraph{Geodetska konveksnost.}
 Konveksnost v grafih ni enoličen pojem.
 V evklidski geometriji je konveksna množica tist, ki vsebuje daljico med poljubnima dvema točkama.
 V grafih pa obstaja več možnih analogij daljice.
@@ -351,8 +349,8 @@ Izometričnost je šibkejša zahteva, da so razdalje med vozlišči podgrafa ena
 Izometričnost je zgodovinsko tesno povezana z vprašanji vložitev grafov v enostavnejše metrične prostore, kot jih srečamo na primer pri delnih kubih.
 
 Graf je delni kub, če je izomorfen izometričnemu podgrafu hiperkocke.
-Ena izmed zgodnjih smeri je teorija vložitev v hiperkocke.
-Firsov \cite{firsov1965isometric} je obravnaval izometrične vložitve grafov v Boolove kocke, Djoković \cite{djokovic1973} pa je razvil temeljne ideje o izometričnih (t.j. kjer se ohranijo razdalje) podgrafih hiperkock.
+Teorija vložitev v hiperkocke se ukvarja s izometričnimi podfgrafi.
+Firsov \cite{firsov1965isometric} je obravnaval izometrične vložitve grafov v Boolove kocke, Djoković \cite{djokovic1973} pa je razvil temeljne ideje o izometričnih podgrafih hiperkock.
 Iz te smeri se je razvila teorija parcialnih kubov, tj. grafov, ki so izometrični podgrafi hiperkock.
 Kasneje je Winkler \cite{winkler1984} obravnaval izometrične vložitve v produkte polnih grafov, kar vodi do Hammingovih grafov in produktnih metrik.
 Chepoi \cite{chepoi1988isometric} je nadalje povezal izometrične podgrafe Hammingovih grafov s konveksnostnimi pojmi, Ovchinnikov \cite{ovchinnikov2011} pa podaja pregleden opis parcialnih kubov kot ene izmed osrednjih družin metrične teorije grafov.
@@ -369,16 +367,16 @@ Začetki teorije medianih grafov segajo v delo Nebeskega \cite{nebesky1971median
 \cite{mulder1978} ter Mulder in Schrijver \cite{mulder1979median}.
 Klavžarja in Mulderja sta tudi opravila pregled \cite{klavzar1999median} medianih grafov ter jih povezala z lokacijsko teorijo, konveksnostjo in sorodnimi strukturami.
 Bandelt in Chepoi \cite{chepoi2002} dodatno poudarita povezavo med
-medianimi grafi, gated množicami in kubičnimi strukturami.
+medianimi grafi, zastraženimi (angl. \emph{gated)} množicami in kubičnimi strukturami.
 
-Za našo razpravo je bistveno naslednje: v medianih grafih se konveksnost
-obnaša bistveno bolj urejeno kot v splošnih grafih.
-Konveksne množice so tesno povezane z gated množicami, kar omogoča preproste lokalne karakterizacije in učinkovite algoritme.
+Za našo razpravo je bistveno naslednje.
+V medianih grafih se konveksnost obnaša bistveno bolj urejeno kot v splošnih grafih.
+Konveksne množice so tesno povezane z zastraženimi množicami, kar omogoča preproste lokalne karakterizacije in učinkovite algoritme.
 
 \paragraph{Sorodni algoritemski problemi.}
 Eden izmed sorodnih problemov je računanje konveksne lupine in parametra \emph{hull number}.
 Dourado et.al \cite{dourado2009computation} se osredotočajo na izračun najmanjših množic, katerih konveksna lupina je celoten graf.
-Njihov cilj ni neposredno preverjanje konveksnosti podanega podgrafa, vendar Cabello iz te literature izpelje algoritem za testiranje konveksnosti v primeru enotskih dolžin povezav ter ga posploši na povezave z neenotskimi dolžinami.
+Cabello iz te literature izpelje algoritem za testiranje konveksnosti v primeru enotskih dolžin povezav ter ga posploši na povezave z neenotskimi dolžinami.
 
 Druga bližnja smer so algoritmi za posebne razrede grafov.
 Imrich in Klavžar \cite{imrich1998convexity} sta uporabila konveksnostne lastnosti in \(\Theta\)-razrede v bipartitnih grafih za
@@ -391,6 +389,76 @@ Glantz in Meyerhenke \cite{glantz2017finding} obravnavata iskanje konveksnih rez
 Tudi tu gre za uporabo geodetske konveksnosti.
 
 \subsection{Pregled obstoječih algoritmov}
+
+Splošni pristop k testiranju konveksnosti podgrafa obsega dva koraka.
+Prvi korak je izračun razdalj, drugi korak pa preverjanje pogoja konveksnosti.
+Drugi korak je enakovreden konstrukciji množice \(H_x = \bigcup_{y \in V(H)} I_G(x,y)\) za vsako vozlišče \(x\) podgrafa \(H\).
+Podgraf \(H\) je v \(G\) konveksen natanko tedaj, ko za vsako vozlišče \(x \in V(H)\) velja \(H_x \subseteq H\).
+
+Konstrukcija množice \(H_x\) zahteva čas \(O(m)\), če je drevo najkrajših poti iz \(x\) v \(G\) že znano.
+Testiranje pogoja \(H_x \subseteq H\) prav tako zahteva čas \(O(m)\).
+Preverjanje konveksnosti torej temelji na izračunu dreves najkrajših poti za vsako vozlišče, kar ustreza problemu iskanja najkrajših poti med vsemi pari vozlišč (angl. \emph{all-pairs shortest-paths}, krajše APSP). Skupna časovna zahtevnost algoritma je \(O(nm)\).
+
+Pri določanju izometričnosti lahko uporabimo podoben pristop.
+Najprej izračunamo razdalje v grafu \(G\) in v podgrafu \(H\), nato pa preverimo enakost razdalj. Časovna zahtevnost je v tem primeru prav tako \(O(nm)\).
+
+Ker je preverjanje pogoja konveksnosti v linearnem času odvisno zgolj od števila povezav, se bomo osredotočili na časovno zahtevnost izračuna najkrajših poti.
+Časovna zahtevnost problema APSP je odvisna od lastnosti uteži v grafu.
+
+Pri neuteženih grafih (oz. grafih z enotskimi dolžinami) lahko uporabimo iskanje v širino (BFS).
+V tem primeru je skupna časovna zahtevnost \(O(nm)\).
+Za utežene grafe sta Fredman in Tarjan \cite{tarjanFredman1987} razvila algoritem, ki temelji na Fibonaccijevih kopicah s časovno zahtevnostjo \(O(n^2 logn + n m)\).
+V primeru, da so uteži povezav naravna števila, Thorup \cite{thorup1999} predstavlja algoritem za reševanje problema APSP v času \(O(nm)\), ki temelji na izboljšavi Dijkstrovega algoritma.
+Vendar je ta rešitev vezana na model RAM in je optimalna predvsem v teoretičnem smislu.
+Za redke grafe sta Pettie in Ramachandran \cite{pettie2002} predstavila algoritem, ki temelji zgolj na operacijah seštevanja in primerjave, časovna zahtevnost pa je \(O(mn \cdot \alpha(m, n))\).
+
+V primeru splošnih grafov ta pristop običajno vodi do časovnih zahtevnosti reda \(\tilde{O}(nm)\) oziroma mej, ki so odvisne od modela uteži in izbranega algoritma za iskanje najkrajših poti.
+
+\paragraph{Posebni razredi grafov: mediani in bipartitni grafi.}
+Mediani grafi so izrazit primer razreda, pri katerem posebna metrična struktura grafa vodi do hitrejšega preverjanja konveksnosti.
+Bénéteau et. al. v članku o medianah v medianih grafih \cite{beneteau2022medians} uporabijo dejstov, da v medianih grafih konveksne množice sovpadajo z zastraženimi množicami.
+Zastražena podmnožica $S \subseteq X$ je podmnožica, za katero velja, da za vsako točko \(x \in X\) obstaja enolična točka \(y \in S\), tako da za vse \(z \in S\) velja: \(d(x, z) = d(x, y) + d(y, z).\)
+To pomeni, da vsaka najkrajša pot iz $x$ do vsakega drugega vozlišča iz $S$ mora potovati skozi vozlišče $y$.
+
+Zaradi te ekvivalence je mogoče globalni pogoj o vseh
+najkrajših poteh nadomestiti z lokalnim robnim kriterijem.
+Za povezan induciran podgraf \(H\) zadošča preveriti, da ima vsak vrh iz \(V(G) \setminus H\) največ enega soseda v \(H\).
+Tak preizkus zahteva le en pregled robov grafa, zato ga je mogoče izvesti v linearnem času \(O(m)\).
+
+Strukturno ozadje te poenostavitve je povezano z \(\Theta\)-razredi in
+polprostori medianega grafa.
+Vsak \(\Theta\)-razred razcepi graf na dva
+konveksna polprostora, avtorji \cite{beneteau2022medians} pa pokažejo tudi, da je mogoče vse \(\Theta\)-razrede izračunati v linearnem času z algoritmom LexBFS (Algorithm 1, Theorem 4.8).
+To dodatno ponazarja splošno načelo, da je v medianih grafih mogoče številne metrične probleme reševati kombinatorično, brez eksplicitnega izračuna vseh parnih razdalj.
+
+Osrednja ugotovitev teh posebnih primerov je, da zahtevnost preverjanja
+konveksnosti  močno odvisna od strukturnih lastnosti gostiteljskega grafa.
+V razredih z bogato metrično in kombinatorično strukturo se pogoji pogosto prevedejo v lokalne ali razredne karakterizacije, kar omogoča učinkovitejše algoritme.
+
+\paragraph{Produkti grafov in faktorizacijski pristopi.}
+Druga pomembna algoritemska ideja je izkoriščanje produktne strukture.
+Če je graf mogoče zapisati kot kartezični produkt
+\[
+  G = G_1 \square G_2 \square \cdots \square G_k,
+\]
+potem se razdalje v \(G\) razcepijo po koordinatah.
+To pomeni, da je mogoče nekatere metrične lastnosti, vključno s konveksnostjo, obravnavati prek projekcij na faktorje.
+Za kartezične produkte velja, da se geodetska struktura produkta močno navezuje na geodetsko strukturo posameznih faktorjev.
+
+\subsection{Uporabe testiranja konveksnosti}
+Konveksni in izometrični podgrafi so osnovni pojmi v več aktivnih področjih teorije grafov, diskretne geometrije, vložitvenih metod in analize omrežij.
+
+Konveksnost v grafih se pojavlja tudi v bolj aplikativni literaturi o
+analizi omrežjih.
+Marc in Šubelj \cite{subelj2018} obravnavata
+konveksnost v kompleksnih omrežjih.
+Odkrila sta, da je globalna konveksnost značilna za infrastrukturna omrežja in grafe socialnega sodelovanja.
+V teh omrežjih so povezane podmnožice vozlišč z visoko verjetnostjo konveksne, kar je v nasprotju z naključnimi grafi.
+
+Podobno Šubelj et. al. \cite{subeljetal2019} uporabljajo konveksnost pri
+analizi znanstvenih sodelovalnih omrežij.
+Prispevek te študije je razvoj tehnike za prepoznavanje vplivnih raziskovalcev, ki so bili predhodno skriti v omrežju znanstvenega sodelovanja svoje skupnosti, in sicer z uporabo standardnih izračunov centralnosti na konveksnem skeletu, izvlečenem iz tega omrežja.
+Odkrili so tudi, da so omrežja znanstvenega sodelovanja so precej konveksna.
 
 \section{Karakterizacija izometričnih podgrafov \cite{main_paper}}
 
@@ -634,7 +702,7 @@ Pri razlagi pogoja za konveksnost moramo upoštevati, da se lema o meji nanaša 
 \end{equation}
 potem obstaja najkrajša pot, ki ni v celoti vsebovana v $H$, zato podgraf ni konveksen.
 
-Glavni rezultat šestega poglavja je naslednji.
+Glavni rezultat šestega poglavja je naslednji:
 
 \begin{theorem}[\cite{main_paper}]
 Naj bo $G$ ravninski graf z $n$ vozlišči in naj bo $H=\operatorname{int}(G,C)$ podgraf, definiran s ciklom $C$. Tedaj lahko v času
@@ -652,11 +720,13 @@ Pomen rezultata je v tem, da cikel $C$ jasno loči notranjost in zunanjost podgr
 \end{equation}
 Ker je število mejnih ciklov konstantno, se osnovna ideja primerjanja notranjih in zunanjih razdalj med mejnimi vozlišči še vedno uporablja, podrobnosti pa so v skrajšani različici članka izpuščene.
 
-\section{Premislek in teoretična nadgradnja}
-
-\section{Eksperimentalno ovrednotenje}
 
 \section{Zaključek}
+V tem delu smo obravnavali problem preverjanja konveksnosti in izometričnosti podgrafa v splošnem grafu, pri čemer smo se osredotočili na rezultate Cabellovega članka. Pokazali smo, da je mogoče obe lastnosti učinkovito karakterizirati s primerjavo razdalj, zlasti na množici mejnih vozlišč, kar omogoča bistveno bolj učinkovite algoritme od naivnih pristopov.
+
+Pomemben prispevek analiziranega dela je tudi razumevanje omejitev teh problemov. Pogojne spodnje meje, ki temeljijo na domnevah OVC in SETH, kažejo, da v splošnem primeru ne moremo pričakovati bistveno hitrejših algoritmov od kvadratnega časa. To poudarja pomen raziskovanja posebnih razredov grafov, kjer lahko izkoristimo dodatno strukturo in dosežemo boljše časovne zahtevnosti, kot na primer pri grafih majhne drevesne širine ali planarnih grafih.
+
+Analiza kaže, da je povezava med metrično teorijo grafov in algoritmičnimi tehnikami ključna za razumevanje teh problemov. Nadaljnje raziskave bi se lahko usmerile v razvoj učinkovitejših algoritmov za širše razrede grafov ali v iskanje novih karakterizacij, ki bi omogočile hitrejše preverjanje konveksnosti in izometričnosti v praksi.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{sample-base}
