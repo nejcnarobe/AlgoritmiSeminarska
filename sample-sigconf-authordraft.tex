@@ -109,6 +109,8 @@
 \usepackage{amsthm}
 \theoremstyle{definition}
 \newtheorem{definition}{Definicija}[section]
+\newtheorem{assumption}{Domneva}[section]
+\newtheorem{theorem}{Izrek}[section]
 
 %%
 %% end of the preamble, start of the body of the document source.
@@ -401,6 +403,39 @@ Tedaj je $H$ konveksen natanko tedaj, ko velja
 \end{equation}
 
 Glavna razlika med karakterizacijo izometričnosti in karakterizacijo konveksnosti je torej v strožjem pogoju. Pri izometričnosti preverjamo, ali obstaja krajša pot zunaj $H$, pri konveksnosti pa moramo izključiti tudi enako dolge zunanje najkrajše poti. 
+
+\section{Pogojna spodnja meja}
+
+V tem poglavju obravnavamo računsko zahtevnost preverjanja izometričnosti in konveksnosti v splošnih grafih. Glavni rezultat je pogojna spodnja meja, ki pove, da za redke grafe ne moremo pričakovati bistveno hitrejšega algoritma od kvadratne časovne zahtevnosti, razen če se izkaže, da nekatere standardne domneve iz teorije računske zahtevnosti ne veljajo.
+
+Spodnja meja temelji na dveh znanih domnevah: domnevi o ortogonalnih vektorjih (angl. \textit{Orthogonal Vectors Conjecture}), označeni z OVC, in Hipotezi o močnem eksponentnem času (angl. \textit{Strong Exponential Time Hypothesis}), označeni s SETH.
+
+
+\begin{assumption}[OVC \cite{WILLIAMS2005357}] Za vsak konstanten $\varepsilon > 0$ obstaja konstanta $c \geq 1$ da naslednji problem ne more biti rešen v času $O(n^{2-\varepsilon})$: \textit{ ali za n binarnih vektorjev $v_1, \ldots, v_n \in \{0,1\}^d$, kjer je $d = \lceil c \log n \rceil$, obstajata $i,j \in [n]$ da je $\langle v_i, v_j \rangle = 0$}.
+
+\end{assumption}
+\begin{assumption}[SETH] 
+  Ta domneva je povezana z zahtevnostjo problema $k$-SAT. Za vsak konstanten $\varepsilon > 0$ obstaja celo število $k \geq 3$ da $k$-SAT z n spremenljivkami ne more biti rešen v $O(2^{(1-\varepsilon)n})$.
+\end{assumption}
+
+Pomembna povezava med tema domnevama je, da OVC sledi iz SETH.
+
+Spodnja meja je povezana s problemom premera grafa. Premer grafa $G$ je definiran kot največja razdalja med poljubnima vozliščema:
+\[
+    \operatorname{diam}(G) = \max_{x,y \in V(G)} d_G(x,y).
+\]
+
+\begin{theorem}
+\label{theorem-diam-ovc-seth-fail}
+  Za neusmerjene grafe z $n$ vozlišči in $O(n)$ povezavami bi algoritem, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, ločil med grafi s premerom $2$ in grafi s premerom $3$  pomenilo , da OVC in SETH ne veljata.
+\end{theorem}
+
+Izrek~\ref{theorem-diam-ovc-seth-fail} se prenese tudi na problema preverjanja izometričnosti in konveksnosti podgrafa. 
+ 
+ \begin{theorem} Za neusmerjen graf $G$ z $n$ vozlišči in $O(n)$ povezavami ter podgraf $H \subseteq G$ bi obstoj algoritma, ki bi v času $O(n^{2-\varepsilon})$, za nek konstanten $\varepsilon > 0$, odločil, ali je $H$ izometričen podgraf grafa $G$, pomenil, da OVC in SETH ne veljata. Enako velja tudi za preverjanje konveksnosti.
+\end{theorem}
+
+Glavni sklep je, da za splošne redke grafe ne moremo pričakovati algoritma s časovno zahtevnostjo $O(n^{2-\varepsilon})$ za preverjanje izometričnosti ali konveksnosti podgrafa, za katerikoli konstanten $\varepsilon > 0$, razen če bi se izkazalo, da OVC in SETH ne veljata. To pomeni, da so znani splošni algoritmi, ki temeljijo na računanju razdalj med pari vozlišč, v splošnem primeru skoraj optimalni glede na trenutno sprejete domneve računske zahtevnosti.
 
 \section{Premislek in teoretična nadgradnja}
 
