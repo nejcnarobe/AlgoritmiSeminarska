@@ -546,38 +546,38 @@ Glavni sklep je, da za splošne redke grafe ne moremo pričakovati algoritma s �
 
 Po karakterizaciji izometričnih in konveksnih podgrafov članek obravnava, kako lahko te kriterije uporabimo pri posebnih razredih grafov \cite{main_paper}. Osnovna ideja je, da se preverjanje obeh lastnosti prevede na računanje vsot razdalj oziroma različic Wienerjevega indeksa. Zato je učinkovitost algoritma odvisna predvsem od tega, kako hitro znamo v danem razredu grafov računati razdalje ali Wienerjev indeks.
 
-Pri konveksnosti se uporablja tudi splošna tehnika rahlega krajšanja povezav zunaj podgrafa. Za majhen $\varepsilon > 0$ lahko definiramo spremenjene dolžine
+Pri konveksnosti se uporablja tudi splošna tehnika infinitezimalnega krajšanja povezav zunaj podgrafa. Ker primernega realnega parametra ni nujno enostavno učinkovito izračunati, članek uporabi leksikografske dolžine
 \begin{equation}
-    \ell_2(e) =
+    \ell_2(e)=
     \begin{cases}
-        \ell(e), & \text{če } e \in E(H),\\
-        \ell(e) - \varepsilon, & \text{če } e \in E(G)\setminus E(H).
+        (\ell(e),0), & \text{če } e\in E(H),\\
+        (\ell(e),-1), & \text{če } e\in E(G)\setminus E(H).
     \end{cases}
 \end{equation}
-Če obstaja najkrajša pot med vozlišči iz $H$, ki zapusti $H$, potem po tej perturbaciji postane strogo krajša. Na ta način lahko konveksnost preverjamo z algoritmi za razdalje, podobno kot izometričnost. Ta ideja ni posebnost posameznega razreda grafov, temveč splošna tehnika, ki jo članek nato uporabi pri posebnih razredih.
+Tak par predstavlja dolžino $\ell(e)-\delta$ za infinitezimalno majhen $\delta>0$. Dolžine poti se zato primerjajo leksikografsko. Če najkrajša pot med vozlišči iz $H$ zapusti $H$, se pri tej perturbaciji loči od poti, ki ostanejo v $H$. Na ta način lahko konveksnost preverjamo s podobnimi vsotami razdalj kot izometričnost. Ta ideja ni posebnost posameznega razreda grafov, temveč splošna tehnika, ki jo članek nato uporabi pri posebnih razredih.
 
-Prvi pomemben razred so grafi majhne drevesne širine. Drevesna širina meri, kako blizu je graf drevesu, in za fiksno vrednost omogoča učinkovitejše algoritme za številne probleme. Ker za take grafe obstajajo hitri postopki za računanje ustreznih vsot razdalj, dobimo naslednji rezultat.
+Prvi pomemben razred so grafi majhne drevesne širine. Drevesna širina meri, kako blizu je graf drevesu, in za fiksno vrednost omogoča učinkovitejše algoritme za številne probleme. Avtor pokaže, da lahko pri takih grafih prej opisane karakterizacije združimo z znanimi postopki za računanje ustreznih vsot razdalj \cite{CABELLO2009815, bringmann_et_al}, kar da naslednji rezultat.
 
 \begin{theorem}[\cite{main_paper}]
-Naj bo $G$ graf z $n$ vozlišči in drevesno širino $k \geq 3$. Za dani podgraf $H \subseteq G$ lahko testiramo, ali je $H$ izometričen oziroma konveksen podgraf grafa $G$, v času
+Naj bo $k\geq 3$ fiksna konstanta in naj bo $G$ graf z $n$ vozlišči ter drevesno širino največ $k$. Za dani podgraf $H \subseteq G$ lahko testiramo, ali je $H$ izometričen oziroma konveksen podgraf grafa $G$, v času
 \begin{equation}
     O(n \log^{k-1} n).
 \end{equation}
 \end{theorem}
 
-Članek omenja tudi algoritem, pri katerem je odvisnost od drevesne širine eksplicitna. Za poljuben $\varepsilon > 0$ je mogoče ustrezne količine računati v času
+Članek omenja tudi algoritem, pri katerem je odvisnost od drevesne širine eksplicitna. Če drevesne širine ne obravnavamo kot konstante, je za poljuben konstanten $\varepsilon > 0$ mogoče ustrezne količine računati v času \cite{bringmann_et_al}
 \begin{equation}
-    n^{1+\varepsilon}2^{O(k)}.
+    n^{1+\varepsilon}2^{O(\operatorname{tw}(G))}.
 \end{equation}
-To je uporabno predvsem takrat, ko želimo natančneje razumeti vpliv parametra $k$ na časovno zahtevnost.
+To je uporabno predvsem takrat, ko želimo natančneje razumeti vpliv parametra $\operatorname{tw}(G)$ na časovno zahtevnost.
 
-Drugi pomemben razred so planarni grafi. Za planarne grafe obstajajo učinkoviti algoritmi za računanje Wienerjevega indeksa in sorodnih vsot razdalj, med drugim s pomočjo Voronojevih diagramov v planarnih grafih. Voronojevi diagrami tukaj služijo za učinkovito razdelitev planarnega grafa glede na najbližje mejne oziroma označene točke, kar omogoča hitrejše seštevanje razdalj brez eksplicitnega preverjanja vseh parov vozlišč. Članek te rezultate poveže s prej opisanimi karakterizacijami in dobi algoritem s časovno zahtevnostjo
+Drugi pomemben razred so planarni grafi. Za planarne grafe obstajajo učinkoviti algoritmi za računanje Wienerjevega indeksa in sorodnih označenih vsot razdalj \cite{voronoi, subquadratic}. Članek te rezultate poveže s prej opisanimi karakterizacijami in dobi algoritem s časovno zahtevnostjo
 \begin{equation}
     \tilde{O}(n^{5/3}),
 \end{equation}
 kjer oznaka $\tilde{O}$ pomeni, da so logaritemski faktorji izpuščeni. To je bistveno boljše od naivnega preverjanja vseh parov vozlišč v splošnem grafu.
 
-Avtor opozori tudi na omejitve tega pristopa. Metoda zahteva dovolj splošno različico Wienerjevega indeksa, ki podpira označena oziroma utežena vozlišča, zato je ni mogoče neposredno uporabiti v vsakem razredu grafov, kjer znamo izračunati samo navadni Wienerjev indeks. Poleg tega podgraf $H$ ni nujno induciran, kar dodatno omeji uporabo nekaterih znanih algoritmov.
+Avtor opozori tudi na omejitve tega pristopa. Metoda zahteva dovolj splošno različico Wienerjevega indeksa, ki podpira označena oziroma utežena vozlišča, zato je ni mogoče neposredno uporabiti v vsakem razredu grafov, kjer znamo izračunati samo navadni Wienerjev indeks. Poleg tega podgraf $H$ ni nujno induciran in ne ohranja nujno vseh strukturnih lastnosti gostiteljskega grafa, kar dodatno omeji uporabo nekaterih znanih algoritmov.
 
 Članek obravnava tudi neutežene grafe brez minorjev $K_h$. Za ta razred je znan podkvadratni algoritem za računanje Wienerjevega indeksa s časovno zahtevnostjo
 \begin{equation}
@@ -585,7 +585,7 @@ Avtor opozori tudi na omejitve tega pristopa. Metoda zahteva dovolj splošno raz
 \end{equation}
 To omogoča testiranje izometričnosti v tem razredu grafov. Za konveksnost pa pristop ni neposredno uporaben, saj bi zaradi perturbacije dolžin potrebovali ustrezen podkvadratni algoritem za utežene grafe brez $K_h$-minorja, kar trenutno ni znano.
 
-Na koncu avtor omenja še medianske grafe. Čeprav imajo medianski grafi močno strukturo, ta sama po sebi ne zadošča za neposredno uporabo predstavljenega pristopa. Težava je, da testirani podgraf ne ohranja nujno lastnosti, zaradi katerih so medianski grafi algoritmično ugodni. Za ta razred bi bila zato potrebna dodatna ideja.
+Na koncu avtor omenja še medianske grafe. Čeprav imajo medianski grafi močno strukturo, ta sama po sebi ne zadošča za neposredno uporabo predstavljenega pristopa. Težava je, da testirani podgraf ne ohranja nujno lastnosti, zaradi katerih so medianski grafi algoritmično ugodni. Za ta razred bi bila zato potrebna dodatna ideja. Po drugi strani je za medianske grafe konveksnost mogoče testirati drugače, prek povezave med konveksnimi in tako imenovanimi zaprtimi oziroma gated množicami.
 
 \section{Podgrafi ravninskih grafov, definirani s cikli}
 \label{sec:ravninski-cikli}
@@ -601,15 +601,15 @@ Ta primer je zanimiv, ker vsaka pot, ki zapusti $H$, preide skozi mejo, torej sk
     O(n \log n).
 \end{equation}
 
-Pomembno vlogo imajo algoritmi za najkrajše poti iz več virov v planarnih grafih, znani kot MSSP oziroma \textit{multiple-source shortest paths}. Ti algoritmi omogočajo učinkovito premikanje korena drevesa najkrajših poti po vozliščih na isti ploskvi. Posebnost članka je, da MSSP ni uporabljen samo za vzdrževanje ene družine razdalj, temveč za primerjavo notranjih in zunanjih razdalj glede na cikel $C$.
+Pomembno vlogo imajo algoritmi za najkrajše poti iz več virov v planarnih grafih, znani kot MSSP oziroma \textit{multiple-source shortest paths} \cite{mssp_emb, mssp_plan}. Ti algoritmi omogočajo učinkovito premikanje korena drevesa najkrajših poti po vozliščih na isti ploskvi. Posebnost članka je, da MSSP ni uporabljen samo za vzdrževanje ene družine razdalj, temveč za primerjavo notranjih in zunanjih razdalj glede na cikel $C$.
 
 Algoritem uporablja podatkovno strukturo za vzdrževanje zaporedja števil
 \begin{equation}
     a_1, a_2, \ldots, a_k.
 \end{equation}
-Podpirati mora inicializacijo, prištevanje vrednosti posameznemu elementu, prištevanje vrednosti zveznemu intervalu elementov ter poizvedbo minimuma. To lahko izvedemo z uravnoteženim binarnim drevesom z dodatnimi informacijami v vozliščih. Inicializacija traja $O(k)$, vsaka posodobitev ali poizvedba pa $O(\log k)$.
+Podpirati mora inicializacijo, prištevanje vrednosti zveznemu podzaporedju elementov $a_i,\ldots,a_j$ za podana indeksa $i \leq j$ ter poizvedbo minimuma. To lahko izvedemo z uravnoteženim binarnim drevesom z dodatnimi informacijami v vozliščih. Inicializacija traja $O(k)$, vsaka posodobitev ali poizvedba pa $O(\log k)$.
 
-Ta struktura se uporabi pri vzdrževanju razdalj med vozlišči na meji ploskve. Namesto da bi za vsako vozlišče cikla znova izračunali drevo najkrajših poti, algoritem premika koren drevesa vzdolž cikla. Pri premiku iz enega vozlišča v naslednje se drevo spremeni samo lokalno: nekatere povezave se odstranijo, druge dodajo, razdalje do določenih skupin vozlišč pa se spremenijo za enako vrednost. Te spremembe se zato lahko predstavijo kot operacije nad zaporedjem.
+Ta struktura se uporabi pri vzdrževanju razdalj med vozlišči na meji ploskve. Namesto da bi za vsako vozlišče cikla znova izračunali drevo najkrajših poti, algoritem premika koren drevesa vzdolž cikla. Pri premiku iz enega vozlišča v naslednje se drevo najkrajših poti spremeni z zaporedjem lokalnih zamenjav povezav. Razdalje do določenih zaporednih skupin vozlišč na ciklu se pri tem spremenijo za enako vrednost, zato jih lahko predstavimo kot intervalske posodobitve nad zaporedjem.
 
 Za testiranje izometričnosti in konveksnosti članek vzdržuje razliko med zunanjimi in notranjimi razdaljami. Če vozlišča cikla označimo z $x_1,\ldots,x_k$, potem za fiksno vozlišče $x_i$ obravnavamo vrednosti oblike
 \begin{equation}
@@ -624,11 +624,15 @@ Pri izometričnosti je problematičen par vozlišč $x_i,x_j \in V(C)$, za kater
 \end{equation}
 To pomeni, da obstaja zunanja pot, ki je krajša od poti znotraj $H$, zato $H$ ni izometričen. V jeziku zaporedja $\tilde{D}_i$ to pomeni, da je njegov minimum strogo manjši od $0$.
 
-Pri konveksnosti je pogoj strožji. Zunanja pot ne sme biti niti enako dolga kot notranja najkrajša pot. Zato mora za vse relevantne pare vozlišč na ciklu veljati
+Pri konveksnosti je pogoj strožji. Zunanja pot med dvema različnima mejnima vozliščema ne sme biti niti enako dolga kot notranja najkrajša pot. Zato mora za vse pare $i\neq j$ veljati
 \begin{equation}
     d_{H_{\mathrm{out}}}(x_i,x_j) > d_H(x_i,x_j).
 \end{equation}
-Ekvivalentno mora biti minimum zaporedja $\tilde{D}_i$ strogo večji od $0$. Če je minimum manjši ali enak $0$, potem obstaja najkrajša pot, ki zapusti $H$, zato podgraf ni konveksen.
+Pri razlagi pogoja za konveksnost moramo upoštevati, da se lema o meji nanaša na različna mejna vozlišča. Diagonalni primer $j=i$ je zato nerelevanten, saj je razlika razdalj vedno enaka $0$. Če za kakšen par $i\neq j$ velja
+\begin{equation}
+    d_{H_{\mathrm{out}}}(x_i,x_j) \leq d_H(x_i,x_j),
+\end{equation}
+potem obstaja najkrajša pot, ki ni v celoti vsebovana v $H$, zato podgraf ni konveksen.
 
 Glavni rezultat šestega poglavja je naslednji.
 
@@ -642,11 +646,11 @@ testiramo, ali je $H$ izometričen podgraf grafa $G$, in ali je $H$ konveksen po
 
 Pomen rezultata je v tem, da cikel $C$ jasno loči notranjost in zunanjost podgrafa. Vsaka pot, ki zapusti $H$ in se pozneje vrne vanj, mora uporabiti vozlišča na ciklu $C$. Morebitno kršitev izometričnosti ali konveksnosti lahko zato zaznamo s primerjavo notranjih in zunanjih razdalj med vozlišči na meji cikla.
 
-Članek rezultat razširi tudi na podgrafe, definirane s konstantnim številom ciklov. To zajame primere, kjer ima podgraf poleg zunanje meje tudi luknje, na primer
+Članek navaja, da se pristop lahko razširi tudi na podgrafe, definirane s konstantnim številom ciklov. To zajame primere, kjer ima podgraf poleg zunanje meje tudi luknje, na primer
 \begin{equation}
     \operatorname{holes}(G,C,\{C_1,C_2\}).
 \end{equation}
-Ker je število mejnih ciklov konstantno, ostane število potrebnih primerjav omejeno, zato se ohrani skoraj linearna časovna zahtevnost.
+Ker je število mejnih ciklov konstantno, se osnovna ideja primerjanja notranjih in zunanjih razdalj med mejnimi vozlišči še vedno uporablja, podrobnosti pa so v skrajšani različici članka izpuščene.
 
 \section{Premislek in teoretična nadgradnja}
 
