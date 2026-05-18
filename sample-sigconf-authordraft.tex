@@ -221,9 +221,9 @@ Posebej obravnavamo časovno zahtevnost problema in predstavimo pogojne spodnje 
       \node[main] (G4) [below of=G1] {4}; \node[main] (G5) [right of=G4] {5}; \node[main] (G6) [right of=G5] {6};
       \draw (G1)--(G2)--(G3); \draw (G4)--(G5)--(G6); \draw (G1)--(G4); \draw (G2)--(G5); \draw (G3)--(G6);
       \begin{scope}[every node/.style={main, fill=red!20, draw=red, thick}]
-        \node (H1) at (0,0) {1}; \node (H2) at (1.8,0) {2}; \node (H5) at (1.8,-1.8) {5}; \node (H4) at (0,-1.8) {4};
+        \node (H1) at (0,0) {1}; \node (H2) at (1.8,0) {2}; \node (H5) at (1.8,-1.8) {5};
       \end{scope}
-      \draw[red, ultra thick] (H1)--(H2)--(H5)--(H4)--cycle;
+      \draw[red, ultra thick] (H1)--(H2)--(H5)--cycle;
       \node at (1.2, -2.5) {};
     \end{scope}
     \begin{scope}[xshift=4cm]
